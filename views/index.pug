@@ -1,0 +1,35 @@
+mixin login
+	a(href='/login') sign in
+
+mixin logout
+	a(href='/logout') sign out
+
+html
+
+	head
+
+		title='FusionAuth Node Example App'
+
+	body
+
+		//-token
+		if body
+
+			//-active token
+			if body.active
+				p.
+					Welcome, !{body.email}!
+					Your token will expire in !{Math.floor(body.exp - (Date.now() / 1000))} seconds.
+				+logout
+
+			//-expired token
+			else
+				p.
+					Your token has expired, so you'll need to log in again.
+				+login
+
+		//-no token
+		else
+			p.
+				You're not logged in.
+			+login
